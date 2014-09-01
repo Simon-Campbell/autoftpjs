@@ -4,28 +4,30 @@
     'use strict';
     
     function PatternCollection(patterns) {
-        var _patterns = patterns;
-        
         return {
             items: function () {
-                return _patterns;
+                return patterns;
             },
             
             contains: function (string) {
-                return _patterns.some(function (pattern) {
+                return patterns.some(function (pattern) {
                     return new RegExp(pattern.pattern).exec(string);
                 });
             },
             
             serialize: function () {
-                return JSON.stringify(_patterns);
+                return JSON.stringify(patterns);
             }
         };
     }
     
-    PatternCollection.deserialize = function (contents) {
-        return new PatternCollection(JSON.parse(contents));
+    PatternCollection.deserialize = function (string) {
+        if (!string) {
+            return new PatternCollection([]);
+        }
+        
+        return new PatternCollection(JSON.parse(string));
     };
     
     module.exports = PatternCollection;
-})();
+}());

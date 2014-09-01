@@ -4,34 +4,35 @@
     'use strict';
     
     function FileCache(cache) {
-        var _cache = cache;
-        
         return {
             serialize: function () {
-                return JSON.stringify(_cache);
+                return JSON.stringify(cache);
             },
             
             items: function () {
-                return _cache;
+                return cache;
             },
             
             isCached: function (file) {
-                return _cache.indexOf(file.name) !== -1;
+                return cache.indexOf(file.name) !== -1;
             },
             
             setCached: function (file) {
-                if (this.isCached(file)) {      
+                if (this.isCached(file)) {
                     return;
                 }
                 
-                _cache.push(file.name);
+                cache.push(file.name);
             }
         };
     }
     
     FileCache.deserialize = function (string) {
+        if (!string) {
+            return new FileCache([]);
+        }
         return new FileCache(JSON.parse(string));
     };
     
     module.exports = FileCache;
-})();
+}());

@@ -56,7 +56,7 @@ var tryConnect = function () {
             }
 		});
 	});
-}
+};
 
 fs.readFile("ftp-conf.json", "ascii", function (err, data) {
 	if (err) {
@@ -76,7 +76,7 @@ fs.readFile("ftp-patterns.json", "ascii", function (err, data) {
     
 	patterns = PatternCollection.deserialize(data);
 	console.log('Loaded ' + patterns.items().length + ' patterns');
-	console.log(patterns.items);
+	console.log(patterns.items());
 	
 	tryConnect();
 });
@@ -86,12 +86,7 @@ fs.readFile("ftp-dl.cache.json", "ascii", function (err, data) {
         throw err;
     }
     
-	if (data) {
-        fileCache = FileCache.deserialize(data);
-    } else {
-        fileCache = FileCache.deserialize([]);
-    }
-    
+    fileCache = FileCache.deserialize(data);
 	console.log(fileCache.items().length + ' files in cache');
 	
 	tryConnect();
